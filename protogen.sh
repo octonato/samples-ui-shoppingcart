@@ -72,4 +72,4 @@ protoc \
     -I node_modules/cloudstate/proto/google/api/ \
     -I node_modules/cloudstate/proto/ \
     -I ./node_modules/cloudstate/protoc/include \
-    ../js-shopping-cart/protocols/example/shoppingcart/shoppingcart.proto
+    ../js-shopping-cart/shoppingcart.proto
