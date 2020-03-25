@@ -12,57 +12,56 @@ PROTOC_GEN_TS_PATH="./node_modules/.bin/protoc-gen-ts"
 echo "Compile cloudstate entity key"
 echo "httpbody.proto"
 protoc \
-    --proto_path="node_modules/cloudstate/protoc/include/" \
     --proto_path="node_modules/cloudstate/proto/google/api/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
-    --js_out="import_style=commonjs,binary:${OUT_DIR}" \
+    --js_out="import_style=commonjs,binary:${OUT_DIR}/google/api" \
     --ts_out="service=grpc-web:${OUT_DIR}/google/api" \
-    node_modules/cloudstate/proto/google/api/httpbody.proto
+    httpbody.proto
 
 echo "http.proto"
 protoc \
     --proto_path="node_modules/cloudstate/proto/google/api/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
-    --js_out="import_style=commonjs,binary:${OUT_DIR}" \
+    --js_out="import_style=commonjs,binary:${OUT_DIR}/google/api" \
     --ts_out="service=grpc-web:${OUT_DIR}/google/api" \
-    node_modules/cloudstate/proto/google/api/http.proto
+    http.proto
 
 echo "annotations.proto"
 protoc \
-    --proto_path="node_modules/cloudstate/protoc/include/" \
-    --proto_path="node_modules/cloudstate/proto/" \
+    --proto_path="node_modules/cloudstate/proto/google/api/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
-    --js_out="import_style=commonjs,binary:${OUT_DIR}" \
+    --js_out="import_style=commonjs,binary:${OUT_DIR}/google/api" \
     --ts_out="service=grpc-web:${OUT_DIR}/google/api" \
-    node_modules/cloudstate/proto/google/api/annotations.proto
+    -I ../../chat/cloudstate/protocols/frontend/ \
+    annotations.proto
 
 echo "entity_key.proto"
 protoc \
-    --proto_path="node_modules/cloudstate/protoc/include/" \
     --proto_path="node_modules/cloudstate/proto/cloudstate/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
     --js_out="import_style=commonjs,binary:${OUT_DIR}/cloudstate" \
     --ts_out="service=grpc-web:${OUT_DIR}/cloudstate" \
-    node_modules/cloudstate/proto/cloudstate/entity_key.proto
+    entity_key.proto
 
 echo "eventing.proto"
 protoc \
-    --proto_path="node_modules/cloudstate/protoc/include/" \
     --proto_path="node_modules/cloudstate/proto/cloudstate/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
     --js_out="import_style=commonjs,binary:${OUT_DIR}/cloudstate" \
     --ts_out="service=grpc-web:${OUT_DIR}/cloudstate" \
-    node_modules/cloudstate/proto/cloudstate/eventing.proto
+    eventing.proto
 
 echo "Compiling Shop Service"
 protoc \
-  --proto_path="node_modules/cloudstate/proto/" \
+  -I node_modules/cloudstate/proto/google/api/ \
+  -I node_modules/cloudstate/proto/cloudstate/ \
   --include_imports \
   --proto_path=node_modules/cloudstate/proto \
   --proto_path=node_modules/cloudstate/protoc/include \
   --descriptor_set_out=user-function.desc \
   --proto_path=. \
   shop.proto
+
 
 echo "Compile Cart Service"
 protoc \
