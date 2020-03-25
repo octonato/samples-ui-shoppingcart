@@ -15,7 +15,7 @@ protoc \
     --proto_path="node_modules/cloudstate/protoc/include/" \
     --proto_path="node_modules/cloudstate/proto/google/api/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
-    --js_out="import_style=commonjs,binary:${OUT_DIR}/google/api" \
+    --js_out="import_style=commonjs,binary:${OUT_DIR}" \
     --ts_out="service=grpc-web:${OUT_DIR}/google/api" \
     node_modules/cloudstate/proto/google/api/httpbody.proto
 
@@ -23,7 +23,7 @@ echo "http.proto"
 protoc \
     --proto_path="node_modules/cloudstate/proto/google/api/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
-    --js_out="import_style=commonjs,binary:${OUT_DIR}/google/api" \
+    --js_out="import_style=commonjs,binary:${OUT_DIR}" \
     --ts_out="service=grpc-web:${OUT_DIR}/google/api" \
     node_modules/cloudstate/proto/google/api/http.proto
 
@@ -32,7 +32,7 @@ protoc \
     --proto_path="node_modules/cloudstate/protoc/include/" \
     --proto_path="node_modules/cloudstate/proto/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
-    --js_out="import_style=commonjs,binary:${OUT_DIR}/google/api" \
+    --js_out="import_style=commonjs,binary:${OUT_DIR}" \
     --ts_out="service=grpc-web:${OUT_DIR}/google/api" \
     node_modules/cloudstate/proto/google/api/annotations.proto
 
@@ -56,8 +56,7 @@ protoc \
 
 echo "Compiling Shop Service"
 protoc \
-  -I node_modules/cloudstate/proto/google/api/ \
-  -I node_modules/cloudstate/proto/cloudstate/ \
+  --proto_path="node_modules/cloudstate/proto/" \
   --include_imports \
   --proto_path=node_modules/cloudstate/proto \
   --proto_path=node_modules/cloudstate/protoc/include \
