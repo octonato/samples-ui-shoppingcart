@@ -53,8 +53,8 @@ protoc \
 
 echo "Compiling Shop Service"
 protoc \
-  -I ../../chat/cloudstate/protocols/frontend/google/api/ \
-  -I ../../chat/cloudstate/protocols/frontend/ \
+  -I node_modules/cloudstate/proto/google/api/ \
+  -I node_modules/cloudstate/proto/cloudstate/ \
   --include_imports \
   --proto_path=node_modules/cloudstate/proto \
   --proto_path=node_modules/cloudstate/protoc/include \
