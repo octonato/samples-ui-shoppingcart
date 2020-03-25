@@ -14,7 +14,7 @@ import SubIcon from '@material-ui/icons/Remove';
 
 import UserDialog from '../controls/UserDialog';
 import { User, Item, CartItem } from '../stores';
-import { Cart } from '../_proto/protocols/example/shoppingcart/shoppingcart_pb';
+import { Cart } from '../_proto/shoppingcart_pb';
 import ShoppingCart from '../controls/ShoppingCart';
 
 

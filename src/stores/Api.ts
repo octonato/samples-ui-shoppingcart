@@ -1,8 +1,8 @@
 
 import { User, CartItem, Item } from '../stores';
 import { BrowserHeaders } from 'browser-headers';
-import { ShoppingCartClient, ServiceError } from '../_proto/protocols/example/shoppingcart/shoppingcart_pb_service';
-import { AddLineItem, RemoveLineItem, GetShoppingCart, Cart } from '../_proto/protocols/example/shoppingcart/shoppingcart_pb';
+import { ShoppingCartClient, ServiceError } from '../_proto/shoppingcart_pb_service';
+import { AddLineItem, RemoveLineItem, GetShoppingCart, Cart } from '../_proto/shoppingcart_pb';
 import { Empty } from 'google-protobuf/google/protobuf/empty_pb';
 
 
