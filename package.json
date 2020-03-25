@@ -12,7 +12,7 @@
     "name": "James Roper",
     "email": "jroper2@gmail.com",
     "url": "https://jazzy.id.au"
-  },  
+  },
   "dependencies": {
     "@grpc/proto-loader": "^0.5.1",
     "@improbable-eng/grpc-web": "^0.12.0",
