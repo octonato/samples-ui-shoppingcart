@@ -12,7 +12,7 @@ PROTOC_GEN_TS_PATH="./node_modules/.bin/protoc-gen-ts"
 echo "Compile cloudstate entity key"
 echo "httpbody.proto"
 protoc \
-    --proto_path="../../chat/cloudstate/protocols/frontend/google/api/" \
+    --proto_path="node_modules/cloudstate/proto/google/api/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
     --js_out="import_style=commonjs,binary:${OUT_DIR}/google/api" \
     --ts_out="service=grpc-web:${OUT_DIR}/google/api" \
@@ -20,7 +20,7 @@ protoc \
 
 echo "http.proto"
 protoc \
-    --proto_path="../../chat/cloudstate/protocols/frontend/google/api/" \
+    --proto_path="node_modules/cloudstate/proto/google/api/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
     --js_out="import_style=commonjs,binary:${OUT_DIR}/google/api" \
     --ts_out="service=grpc-web:${OUT_DIR}/google/api" \
@@ -28,7 +28,7 @@ protoc \
 
 echo "annotations.proto"
 protoc \
-    --proto_path="../../chat/cloudstate/protocols/frontend/google/api/" \
+    --proto_path="node_modules/cloudstate/proto/google/api/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
     --js_out="import_style=commonjs,binary:${OUT_DIR}/google/api" \
     --ts_out="service=grpc-web:${OUT_DIR}/google/api" \
@@ -37,7 +37,7 @@ protoc \
 
 echo "entity_key.proto"
 protoc \
-    --proto_path="../../chat/cloudstate/protocols/frontend/cloudstate/" \
+    --proto_path="node_modules/cloudstate/proto/cloudstate/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
     --js_out="import_style=commonjs,binary:${OUT_DIR}/cloudstate" \
     --ts_out="service=grpc-web:${OUT_DIR}/cloudstate" \
@@ -45,7 +45,7 @@ protoc \
 
 echo "eventing.proto"
 protoc \
-    --proto_path="../../chat/cloudstate/protocols/frontend/cloudstate/" \
+    --proto_path="node_modules/cloudstate/proto/cloudstate/" \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \
     --js_out="import_style=commonjs,binary:${OUT_DIR}/cloudstate" \
     --ts_out="service=grpc-web:${OUT_DIR}/cloudstate" \
