@@ -62,7 +62,7 @@
     "prestart": "compile-descriptor shop.proto",
     "start": "node index.js",
     "start-no-prestart": "node index.js",
-    "build": "webpack --config webpack.deploy.config.js",
+    "build": "webpack --config webpack.deploy.config.js  --mode=production",
     "deploy": "webpack --config webpack.deploy.config.js",
     "dockerbuild": "docker build -t ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:latest .",
     "dockerpush": "docker push ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:latest",
