@@ -6,7 +6,6 @@ COPY . .
 RUN npm rebuild
 # remove dev-dependencies
 RUN npm prune --production
-
 EXPOSE 3000
 ENV DEBUG=cloudstate*
 ENTRYPOINT [ "npm", "run", "start-no-prestart" ]
