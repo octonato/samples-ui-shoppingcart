@@ -1,7 +1,7 @@
 {
   "name": "cloudstate-shopping",
   "version": "1.0.0",
-  "description": "CloudState shopping cart stateful function",
+  "description": "CloudState shopping cart stateless frontend",
   "keywords": [
     "serverless",
     "cloudstate",
@@ -62,7 +62,7 @@
     "prestart": "compile-descriptor shop.proto",
     "start": "node index.js",
     "start-no-prestart": "node index.js",
-    "build": "webpack --config webpack.deploy.config.js  --mode=production",
+    "build": "webpack --config webpack.deploy.config.js  --mode=production --env.CART_SCHEME=http --env.CART_HOST=localhost --env.CART_PORT=8090",
     "deploy": "webpack --config webpack.deploy.config.js",
     "dockerbuild": "docker build -t ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:latest .",
     "dockerpush": "docker push ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:latest",

@@ -1,0 +1,54 @@
+version: "3.2"
+
+services:
+  inventory:
+    image: cloudstateio/cloudstate-proxy-dev-mode:latest
+    environment:
+      USER_FUNCTION_HOST: inventory-impl
+      USER_FUNCTION_PORT: 8080
+    depends_on:
+      - inventory-impl
+    ports:
+      - "9001:9000"
+
+  inventory-impl:
+    image: lightbend-docker-registry.bintray.io/cloudstate-samples/inventory:latest
+
+  shopping-cart:
+    image: cloudstateio/cloudstate-proxy-dev-mode:latest
+    container_name: shopping-cart
+    environment:
+      USER_FUNCTION_HOST: shopping-cart-impl
+      USER_FUNCTION_PORT: 8080
+    depends_on:
+      - shopping-cart-impl
+    ports:
+      - "9000:9000"
+
+  shopping-cart-impl:
+    image: lightbend-docker-registry.bintray.io/cloudstate-samples/shopping-cart:latest
+
+  shopping-cart-proxy:
+    image: casperlabs/grpcwebproxy:latest
+    container_name: shopping-cart-proxy
+    depends_on:
+      - shopping-cart
+    ports:
+      - "8090:8090"
+    command: ./grpcwebproxy --run_tls_server=false --backend_addr=shopping-cart:9000 --backend_tls_noverify --server_http_debug_port=8090 --allow_all_origins
+    
+  shopping-service:
+    image: cloudstateio/cloudstate-proxy-dev-mode:latest
+    environment:
+      USER_FUNCTION_HOST: shopping-service-impl
+      USER_FUNCTION_PORT: 8080
+    depends_on:
+      - shopping-service-impl
+    ports:
+      - "9002:9000"
+
+  shopping-service-impl:
+    image: lightbend-docker-registry.bintray.io/cloudstate-samples/shopping-service:latest
+    environment:
+      SHOPPING_CART_CLIENT_ADDRESS: shopping-cart:9000
+      PRODUCT_INVENTORY_CLIENT_ADDRESS: inventory:9000
