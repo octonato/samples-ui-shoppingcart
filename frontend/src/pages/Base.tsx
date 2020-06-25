@@ -15,6 +15,7 @@ import UserDialog from '../controls/UserDialog';
 import { User, Item, CartItem } from '../stores';
 import { Cart } from '../_proto/shoppingcart_pb';
 import ShoppingCart from '../controls/ShoppingCart';
+import { AvailableInventory } from '../stores';
 
 const inventory: Item[] = [
   {
@@ -194,11 +195,12 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
       items.map(i => this.props.store.cartStore.addCartItem(i));
 
       if(items.length > 0) {
-        const avail = this.props.store.api.getAvailableProductInventory(items[0].item);
+        this.props.store.api.getAvailableProductInventory(items[0].item).then( (avail: AvailableInventory) =>  {
 
-        console.log("Kapow! " + avail);
+        console.log("Kapow! avail of " + items[0].item + " is " + avail.quantity);
 
-      }
+      });
+    }
 
     }).catch( err => {
       console.error(err);

@@ -6,7 +6,6 @@ import { AddLineItem, RemoveLineItem, GetShoppingCart, Cart } from '../_proto/sh
 import { Empty } from 'google-protobuf/google/protobuf/empty_pb';
 import { GetAvailable, AvailableInventory as ProtoAvailableInventory } from '../_proto/inventory_pb';
 import { ProductInventoryClient } from '../_proto/inventory_pb_service';
-
 export class Api{
     store: any = null;
 
