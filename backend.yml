@@ -11,6 +11,15 @@ services:
     ports:
       - "9001:9000"
 
+  inventory-proxy:
+    image: casperlabs/grpcwebproxy:latest
+    container_name: inventory-proxy
+    depends_on:
+      - inventory
+    ports:
+      - "8091:8091"
+    command: ./grpcwebproxy --run_tls_server=false --backend_addr=inventory:9000 --backend_tls_noverify --server_http_debug_port=8091 --allow_all_origins
+
   inventory-impl:
     image: lightbend-docker-registry.bintray.io/cloudstate-samples/inventory:latest
 
@@ -46,6 +55,15 @@ services:
       - shopping-service-impl
     ports:
       - "9002:9000"
+
+  shopping-service-proxy:
+    image: casperlabs/grpcwebproxy:latest
+    container_name: shopping-service-proxy
+    depends_on:
+      - shopping-service
+    ports:
+      - "8092:8092"
+    command: ./grpcwebproxy --run_tls_server=false --backend_addr=shopping-service:9000 --backend_tls_noverify --server_http_debug_port=8092 --allow_all_origins
 
   shopping-service-impl:
     image: lightbend-docker-registry.bintray.io/cloudstate-samples/shopping-service:latest

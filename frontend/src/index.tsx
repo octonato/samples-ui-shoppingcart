@@ -5,19 +5,16 @@ import * as historyModule from 'history';
 import { syncHistoryWithStore } from 'mobx-react-router';
 import { Router } from 'react-router';
 
-
-//import App from './App';
-
 const browserHistory = historyModule.createBrowserHistory();
 
 import stores from './stores/index';
 import Base from './pages/Base';
 
-const history = syncHistoryWithStore(browserHistory, stores.routing);
+const history = syncHistoryWithStore(browserHistory , stores.routing);
 
-console.log("chat app version: 1.0.7");
+console.log("Shopping cart frontends");
 
-ReactDOM.render(   
+ReactDOM.render(
     <Provider {...stores}>
         <Router history={history}>
             <Base store={stores} />

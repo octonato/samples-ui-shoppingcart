@@ -1,24 +1,17 @@
 const webpack = require('webpack');
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = env => {
 
-  const envKeys = env ? Object.keys(env).
-    reduce((prev, next) => {
-      prev[`process.env.${next}`] = JSON.stringify(env[next]);
-      return prev;
-    }, {}) : {};
+  const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+  }, {});
 
   return {
     entry: "./src/index.tsx",
     mode: "development",
-    devtool: 'inline-source-map',
-    devServer: {
-      contentBase: './public/build',
-    },
     output: {
       path: path.resolve(__dirname, 'public/build'),
       filename: 'bundle.js',
@@ -27,8 +20,7 @@ module.exports = env => {
       libraryExport: 'default'
     },
     plugins: [
-      new webpack.DefinePlugin(envKeys),
-      new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+      new webpack.DefinePlugin(envKeys)
     ],
     optimization: {
       minimizer: [
