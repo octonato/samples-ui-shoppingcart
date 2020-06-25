@@ -17,6 +17,7 @@ export interface Item{
     description: string;
     image: string;
     price: number;
+    available: number;
 }
 
 export interface CartItem{

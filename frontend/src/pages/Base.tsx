@@ -168,6 +168,14 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
     inventory.map(x => props.store.itemStore.addItem(x) );
   }
 
+  updateItemInventory = (item: Item) => () => {
+    console.log("Updating inventory of item id " + item.id);
+    this.props.store.api.getAvailableProductInventory(item.id).then( (avail: AvailableInventory) => {
+      console.log("Updated inventory of item " + item.id + " to: " + avail.quantity);
+      item.available = avail.quantity;
+    });
+  }
+
   handleAddToCart = (item: Item) => () => {
     const quant = this.state.quants[item.id] || 1
     this.props.store.api.addItem(this.state.user, item, quant).then( () =>{
@@ -233,6 +241,21 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
   handleShoppingCartVisible = (shoppingCartOpen: boolean) => () => {
     this.setState({shoppingCartOpen});
   }
+  availabilityText(available: number): string {
+    if(available == undefined) {
+      return "?";
+    } else if(available > 10) {
+      return "Good";
+    } else if(available > 2) {
+      return "Limited";
+    } else if(available == 2) {
+      return "Last two";
+    } else if(available == 1) {
+      return "Last one";
+    } else {
+      return "Not in stock";
+    }
+  }
 
   render() {
     const classes = this.props.classes;
@@ -281,7 +304,10 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
             {this.props.store.itemStore.stream.map( (i: Item) => (
               <div key={i.id} className={classes.tile}>
                 <Card className={classes.card}>
-                  <CardActionArea onClick={this.handleAddToCart(i)}>
+                  <CardActionArea
+                    onClick={this.handleAddToCart(i)}
+                    onMouseEnter={this.updateItemInventory(i)}
+                    >
                     <CardMedia
                       component="img"
                       alt={i.name}
@@ -315,6 +341,9 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
                     <Button size="small" color="primary" onClick={this.handleAddToCart(i)} >
                       Add to Cart
                     </Button>
+                    <div>
+                      Availability: {this.availabilityText(i.available)}
+                    </div>
                   </CardActions>
                 </Card>
             </div>
