@@ -59,9 +59,23 @@ class ItemStore{
 
 class CartStore{
     @observable cartitems: CartItem[] = [];
-    addCartItem(i: CartItem) {
-        this.cartitems = [...this.cartitems, i];
+
+    addCartItem(cartItem: CartItem) {
+        var existingItem = this.cartitems.find( (ci: CartItem) => {
+            if(ci.item == cartItem.item) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        if(existingItem) {
+            existingItem.quantity += cartItem.quantity
+        }
+        else {
+            this.cartitems = [...this.cartitems, cartItem];
+        }
     }
+
     removeCartItem(i: CartItem) {
         this.cartitems = this.cartitems.filter( x => !(x.user == i.user && x.item == i.item) );
     }
