@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -29,8 +30,12 @@ module.exports = env => {
     plugins: [
       new webpack.DefinePlugin(envKeys),
       new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+      //new BundleAnalyzerPlugin(),
     ],
     optimization: {
+      // providedExports: false,
+      // usedExports: false,
+      minimize: true,
       minimizer: [
         new TerserPlugin({
           cache: true,
@@ -38,6 +43,7 @@ module.exports = env => {
           sourceMap: true, // Must be set to true if using source-maps in production
           terserOptions: {
             // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+            extractComments: true
           }
         }),
       ],

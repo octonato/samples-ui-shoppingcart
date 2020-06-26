@@ -12,7 +12,7 @@ import Base from './pages/Base';
 
 const history = syncHistoryWithStore(browserHistory , stores.routing);
 
-console.log("Shopping cart frontends");
+console.log("Shopping cart frontend: Build mode: " + process.env.NODE_ENV);
 
 ReactDOM.render(
     <Provider {...stores}>

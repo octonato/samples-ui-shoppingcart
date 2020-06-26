@@ -1,12 +1,12 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { Route } from 'react-router';
-import classNames from 'classnames';
+// import { Route } from 'react-router';
+// import classNames from 'classnames';
 import {observer, inject} from 'mobx-react';
-import { MuiThemeProvider, createMuiTheme, withStyles, WithStyles, Theme } from '@material-ui/core/styles';
+import { withStyles, WithStyles, Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 import withRoot from '../withRoot';
-import { IconButton, Typography, CssBaseline, AppBar, Toolbar, GridList, GridListTile, Card, CardActionArea, CardMedia, CardContent, CardActions, Button, Badge} from '@material-ui/core';
+import { IconButton, Typography, CssBaseline, AppBar, Toolbar, Card, CardActionArea, CardMedia, CardContent, CardActions, Button, Badge} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddIcon from '@material-ui/icons/Add';

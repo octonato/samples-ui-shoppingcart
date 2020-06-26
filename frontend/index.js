@@ -7,7 +7,7 @@ const Stateless = require("cloudstate").Stateless;
 app.use("/site", express.static("public"));
 
 server.listen(3000);
-//console.log("Http Servee running on " + server.address().address + ":" + server.address().port);
+console.log("Http Servee running on " + server.address().address + ":" + server.address().port);
 
 let indexPage = Buffer.from("");
 fs.readFile('./public/index.html', function(err, data) {
