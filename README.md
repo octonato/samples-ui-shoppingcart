@@ -4,7 +4,7 @@ The frontend service is a front end web application written in typescript.  It i
 
 This service makes `grpc-web` calls directly to the other services to get the data that it needs.  In order to do this we need to compile the proto definitions from the other services as well as generate the grpc-web clients.  This is all done with a shell script `protogen.sh`.  Let's first run the protogen script, then compile the service definition and finally compile our typescript.
 
-#### Building and deploying
+#### Building the Docker image
 
 ```
 cd frontend
@@ -39,6 +39,21 @@ Push the docker image to the registry
 ```
 docker push <my-registry>/frontend:latest
 ```
+
+Now the image is in the registry you can deploy it either to your own Cloudstate installation or to Lightbend's Cloudstate
+
+#### Deploying to Lightbend Cloudstate
+
+See the instructions here. If you have built your own Docker image be sure to replace the location of that image with the repository you pushed it to.
+
+https://docs.lbcs.dev/tutorial/deploy-cart.html
+
+#### Deploying to your own Cloudstate deployment
+
+If you are running your own Cloudstate instance you can deploy the frontend service as follows:
+
+`kubectl apply -f deploy/frontend.xml`
+
 #### Local testing
 
 In order to run the shopping cart client locally you need to do the following:
@@ -63,7 +78,20 @@ It also sets the USER_FUNCTION_HOST environment variable (the host that the side
 
 In order to run the frontend locally we need to configure it correctly to attach the services on their individual ports. In a full Cloudstate deployment all the services would be accessed by the web frontend over the same host and port (the same one you access the web page on), but in local testing they are all different. To handle this you can set the host and port for each service individually in a way that matches up to the config in `backend.yml`. You need to build a special version of the server that has these settings.
 
-`npm run devbuild`
-`npm run start-no-prestart`
+```
+npm run devbuild
+npm run start-no-prestart
+```
 
 Now you should be able to use the full application and the services it depends on without needing Kubernetes or an ingress setup like Istio.
+
+Alternatively, you can also run the frontend using docker to test locally. You can do so by building a development Docker image instead.
+
+Create a file called `.env` in the root folder of your project with the contents...
+
+`DOCKER_PUBLISH_TO=<your repo here>`
+
+```
+DOCKER_PUBLISH_TO=justinhj npm run dockerdevbuild
+docker-compose -f frontend.yml up -d
+```
