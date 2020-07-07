@@ -22,6 +22,9 @@ These files will appear under the `src/_proto` directory
 npm run prestart
 ```
 The prestart script will run the `compile-descriptor` located in the cloudstate client library using your service definition `shop.proto` outputting `user-function.desc`.
+
+Now build the project.
+
 ```
 npm run-script build
 ```
@@ -30,7 +33,9 @@ Finally the build script will compile the typescript and javascript into a webpa
 Build a docker image with the right registry and tag
 
 NOTE: you can get a free public docker registry by signing up at [https://hub.docker.com](https://hub.docker.com/)
+
 ```
+DOCKER_PUBLISH_TO=<your repo here> npm run dockerbuild
 docker build . -t <my-registry>/frontend:latest
 ```
 
@@ -44,7 +49,7 @@ Now the image is in the registry you can deploy it either to your own Cloudstate
 
 #### Deploying to Lightbend Cloudstate
 
-See the instructions here. If you have built your own Docker image be sure to replace the location of that image with the repository you pushed it to.
+See the instructions here. Note: If you have built your own Docker image be sure to replace the location of that image with the repository you pushed it to.
 
 https://docs.lbcs.dev/tutorial/deploy-cart.html
 
