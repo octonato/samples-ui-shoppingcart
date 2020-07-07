@@ -66,9 +66,10 @@
     "start": "node index.js",
     "start-no-prestart": "node index.js",
     "build": "webpack --config webpack.deploy.config.js  --mode=development",
-    "devbuild": "webpack --config webpack.deploy.config.js  --mode=development --env.CART_SCHEME=http --env.CART_HOST=localhost --env.CART_PORT=8090 --env.SHOPPING_SCHEME=http --env.SHOPPING_HOST=localhost --env.SHOPPING_PORT=8092 --env.INVENTORY_SCHEME=http --env.INVENTORY_HOST=localhost --env.INVENTORY_PORT=8091",
+    "devbuild": "webpack --config webpack.deploy.config.js  --mode=development --env.CART_SCHEME=http --env.CART_HOST=localhost --env.CART_PORT=8090",
     "deploy": "webpack --config webpack.deploy.config.js",
     "dockerbuild": "docker build -t ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:latest .",
+    "dockerdevbuild": "docker build -f DockerfileDev -t ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:dev .",
     "dockerpush": "docker push ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:latest",
     "dockerbuildpush": "npm run dockerbuild && npm run dockerpush"
   }

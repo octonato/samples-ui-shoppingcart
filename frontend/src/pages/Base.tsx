@@ -1,28 +1,30 @@
 import * as React from 'react';
 import clsx from 'clsx';
-// import { Route } from 'react-router';
-// import classNames from 'classnames';
+import { Route } from 'react-router';
+import classNames from 'classnames';
 import {observer, inject} from 'mobx-react';
-import { withStyles, WithStyles, Theme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme, withStyles, WithStyles, Theme } from '@material-ui/core/styles';
 import createStyles from '@material-ui/core/styles/createStyles';
 import withRoot from '../withRoot';
-import { IconButton, Typography, CssBaseline, AppBar, Toolbar, Card, CardActionArea, CardMedia, CardContent, CardActions, Button, Badge} from '@material-ui/core';
+import { IconButton, Typography, CssBaseline, AppBar, Toolbar, GridList, GridListTile, Card, CardActionArea, CardMedia, CardContent, CardActions, Button, Badge} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddIcon from '@material-ui/icons/Add';
 import SubIcon from '@material-ui/icons/Remove';
+
 import UserDialog from '../controls/UserDialog';
 import { User, Item, CartItem } from '../stores';
 import { Cart } from '../_proto/shoppingcart_pb';
 import ShoppingCart from '../controls/ShoppingCart';
-import { AvailableInventory } from '../stores';
+
+
 
 const inventory: Item[] = [
   {
     id: "sg-1",
     name: "Sonar Sunglass",
     description: "something",
-    image: "imgs/shades1.jpg",
+    image: "imgs/shades1.jpg",    
     price: 600.00,
   } as Item,
   {
@@ -87,7 +89,7 @@ const inventory: Item[] = [
 const styles = (theme: Theme) =>
 createStyles({
     root: {
-        display: 'flex',
+        display: 'flex',       
       },
       card: {
         maxWidth: 400,
@@ -95,15 +97,15 @@ createStyles({
       },
       tile: {
         flexGrow: 1,
-      },
+      },     
       title: {
         flexGrow: 1,
-      },
+      }, 
       flex: {
         display: "flex",
         justifyContent: "space-between",
         flexWrap: "wrap",
-      },
+      },      
       appBar: {
         zIndex: theme.zIndex.drawer + 1,
         backgroundColor: "black",
@@ -112,7 +114,7 @@ createStyles({
           duration: theme.transitions.duration.leavingScreen,
         }),
       },
-      appBarShift: {
+      appBarShift: {        
         transition: theme.transitions.create(['width', 'margin'], {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.enteringScreen,
@@ -123,11 +125,11 @@ createStyles({
       },
       hide: {
         display: 'none',
-      },
+      },      
       listPadding:{
         paddingLeft: 5,
-      },
-      toolbar: {
+      },     
+      toolbar: {          
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
@@ -137,7 +139,7 @@ createStyles({
       content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-      },
+      },    
 });
 
 type State = {
@@ -162,22 +164,14 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
     quants: {},
     shoppingCartOpen: false,
   };
-
+  
   constructor(props){
     super(props);
-    inventory.map(x => props.store.itemStore.addItem(x) );
-  }
-
-  updateItemInventory = (item: Item) => () => {
-    console.log("Updating inventory of item id " + item.id);
-    this.props.store.api.getAvailableProductInventory(item.id).then( (avail: AvailableInventory) => {
-      console.log("Updated inventory of item " + item.id + " to: " + avail.quantity);
-      item.available = avail.quantity;
-    });
+    inventory.map(x => props.store.itemStore.addItem(x) );   
   }
 
   handleAddToCart = (item: Item) => () => {
-    const quant = this.state.quants[item.id] || 1
+    const quant = this.state.quants[item.id] || 1 
     this.props.store.api.addItem(this.state.user, item, quant).then( () =>{
       // things went well so add item to cart
       this.props.store.cartStore.addCartItem({
@@ -190,26 +184,17 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
     });
   }
 
-  handelOnUserAddOpen = () =>{
+  handelOnUserAddOpen = () =>{    
     this.setState({ userDialogOpen: true });
   }
   handelAddUserClose = () =>{
     this.setState({ userDialogOpen: false });
   }
-  handelOnUserAdd = (user: User) => {
-    this.setState({user});
+  handelOnUserAdd = (user: User) => {   
+    this.setState({user});    
     this.handelAddUserClose();
     this.props.store.api.getCart(user).then( (items: CartItem[]) => {
       items.map(i => this.props.store.cartStore.addCartItem(i));
-
-      if(items.length > 0) {
-        this.props.store.api.getAvailableProductInventory(items[0].item).then( (avail: AvailableInventory) =>  {
-
-        console.log("Kapow! avail of " + items[0].item + " is " + avail.quantity);
-
-      });
-    }
-
     }).catch( err => {
       console.error(err);
     })
@@ -241,26 +226,11 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
   handleShoppingCartVisible = (shoppingCartOpen: boolean) => () => {
     this.setState({shoppingCartOpen});
   }
-  availabilityText(available: number): string {
-    if(available == undefined) {
-      return "?";
-    } else if(available > 10) {
-      return "Good";
-    } else if(available > 2) {
-      return "Limited";
-    } else if(available == 2) {
-      return "Last two";
-    } else if(available == 1) {
-      return "Last one";
-    } else {
-      return "Not in stock";
-    }
-  }
 
-  render() {
-    const classes = this.props.classes;
-    let ind = 0;
-    return (
+  render() {    
+    const classes = this.props.classes;    
+    let ind = 0;    
+    return (    
         <div className={classes.root}>
         <CssBaseline />
         <AppBar
@@ -296,18 +266,15 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
               </IconButton>
               </Badge>
           </Toolbar>
-        </AppBar>
+        </AppBar>     
         <main className={classes.content}>
           <div className={classes.toolbar} />
-
+        
           <div className={classes.flex}>
             {this.props.store.itemStore.stream.map( (i: Item) => (
-              <div key={i.id} className={classes.tile}>
+              <div key={i.id} className={classes.tile}>                
                 <Card className={classes.card}>
-                  <CardActionArea
-                    onClick={this.handleAddToCart(i)}
-                    onMouseEnter={this.updateItemInventory(i)}
-                    >
+                  <CardActionArea onClick={this.handleAddToCart(i)}>
                     <CardMedia
                       component="img"
                       alt={i.name}
@@ -320,8 +287,8 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
                         {"$" + i.price}
                       </Typography>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {i.name}
-                      </Typography>
+                        {i.name}                      
+                      </Typography>                      
                       <Typography variant="body2" color="textSecondary" component="p">
                         Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                         across all continents except Antarctica
@@ -341,20 +308,18 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
                     <Button size="small" color="primary" onClick={this.handleAddToCart(i)} >
                       Add to Cart
                     </Button>
-                    <div>
-                      Availability: {this.availabilityText(i.available)}
-                    </div>
                   </CardActions>
                 </Card>
-            </div>
-            ))}
+            </div>            
+            ))}           
         </div>
         </main>
         <ShoppingCart store={this.props.store} open={this.state.shoppingCartOpen} userId={this.state.user && this.state.user.name} onClose={this.handleShoppingCartVisible(false)} onDeleteCartItem={this.onDeleteCartItem} onDeleteCart={this.onDeleteCart} />
         <UserDialog store={this.props.store} onClose={this.handelAddUserClose} onUserAdded={this.handelOnUserAdd} open={this.state.userDialogOpen} />
-      </div>
+      </div>      
     );
   }
 }
+
 
 export default withRoot((withStyles(styles)(Base) ));

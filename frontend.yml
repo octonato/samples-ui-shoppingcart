@@ -14,7 +14,7 @@ services:
       - "9003:9000"
 
   frontend-impl:
-    image: cloudstateio/frontend:latest
+    image: ${DOCKER_PUBLISH_TO-cloudstateio}/frontend:dev
     environment:
       SHOPPING_CART_CLIENT_ADDRESS: shopping-cart:9000
       PRODUCT_INVENTORY_CLIENT_ADDRESS: inventory:9000

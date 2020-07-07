@@ -67,6 +67,3 @@ In order to run the frontend locally we need to configure it correctly to attach
 `npm run start-no-prestart`
 
 Now you should be able to use the full application and the services it depends on without needing Kubernetes or an ingress setup like Istio.
-
-
-
