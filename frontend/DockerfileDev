@@ -10,7 +10,7 @@ RUN npm ci
 # Build app
 COPY . .
 
-RUN npm run build
+RUN npm run devbuild
 
 # Remove dev packages
 RUN npm prune --production

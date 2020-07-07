@@ -27,3 +27,4 @@ protoc \
     --ts_out="service=grpc-web:${OUT_DIR}" \
     -I node_modules/cloudstate/proto/ \
     shoppingcart.proto
+

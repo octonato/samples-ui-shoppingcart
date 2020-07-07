@@ -1,7 +1,7 @@
 {
   "name": "cloudstate-shopping",
   "version": "1.0.0",
-  "description": "CloudState shopping cart stateful function",
+  "description": "CloudState shopping cart stateless frontend",
   "keywords": [
     "serverless",
     "cloudstate",
@@ -29,6 +29,7 @@
     "clsx": "^1.0.4",
     "date-fns": "^2.10.0",
     "debug": "^4.1.1",
+    "eject": "0.0.4",
     "express": "^4.17.1",
     "grpc": "^1.22.2",
     "grpc-web": "^1.0.7",
@@ -38,7 +39,6 @@
     "mobx-react-router": "^4.0.5",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-hot-loader": "^4.3.12",
     "react-router": "^4.3.1"
   },
   "devDependencies": {
@@ -46,25 +46,30 @@
     "@types/compression": "0.0.33",
     "@types/es6-shim": "0.31.39",
     "@types/express": "4.0.33",
+    "@types/google-protobuf": "^3.2.5",
     "@types/history": "4.5.0",
     "@types/node": "^10.12.2",
-    "@types/google-protobuf": "^3.2.5",
+    "clean-webpack-plugin": "^3.0.0",
     "concurrently": "^4.1.0",
+    "mobx-react-devtools": "^6.0.3",
+    "react-hot-loader": "^4.12.21",
     "ts-loader": "^6.0.1",
     "ts-protoc-gen": "0.12.0",
     "typescript": "3.7.4",
     "webpack": "^4.41.5",
+    "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.1.7",
-    "mobx-react-devtools": "^6.0.3"
+    "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
     "prestart": "compile-descriptor shop.proto",
     "start": "node index.js",
     "start-no-prestart": "node index.js",
-    "build": "webpack --config webpack.deploy.config.js  --mode=production",
+    "build": "webpack --config webpack.deploy.config.js  --mode=development",
+    "devbuild": "webpack --config webpack.deploy.config.js  --mode=development --env.CART_SCHEME=http --env.CART_HOST=localhost --env.CART_PORT=8090",
     "deploy": "webpack --config webpack.deploy.config.js",
     "dockerbuild": "docker build -t ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:latest .",
+    "dockerdevbuild": "docker build -f DockerfileDev -t ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:dev .",
     "dockerpush": "docker push ${DOCKER_PUBLISH_TO:-cloudstateio}/frontend:latest",
     "dockerbuildpush": "npm run dockerbuild && npm run dockerpush"
   }
