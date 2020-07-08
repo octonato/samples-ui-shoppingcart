@@ -54,14 +54,12 @@ class ItemStore{
 
 class CartStore{
     @observable cartitems: CartItem[] = [];
+
     addCartItem(cartItem: CartItem) {
-        var existingItem = this.cartitems.find( (ci: CartItem) => {
-            if(ci.item == cartItem.item && cartItem.user == ci.user) {
-                return true;
-            } else {
-                return false;
-            }
-        });
+        var existingItem = this.cartitems.find( (ci: CartItem) : boolean => {
+            return (ci.item == cartItem.item && cartItem.user == ci.user);
+            });
+
         if(existingItem) {
             existingItem.quantity += cartItem.quantity
         }
@@ -71,13 +69,10 @@ class CartStore{
         return true;
     }
     removeCartItem(cartItem: CartItem) {
-        var existingItem = this.cartitems.find( (ci: CartItem) => {
-            if(ci.item == cartItem.item && cartItem.user == ci.user) {
-                return true;
-            } else {
-                return false;
-            }
+        var existingItem = this.cartitems.find( (ci: CartItem) : boolean => {
+            return (ci.item == cartItem.item && cartItem.user == ci.user);
         });
+
         if(existingItem) {
             existingItem.quantity = Math.max(existingItem.quantity - cartItem.quantity, 0);
         }
