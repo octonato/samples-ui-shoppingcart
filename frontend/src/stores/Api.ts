@@ -58,7 +58,6 @@ export class Api{
                 if(err)reject(err);
                 else{
                     const items = response.getItemsList().map( x => ({user: user.name, item: x.getProductId(), quantity: x.getQuantity() } as CartItem) );
-                    console.log("got items", items);
                     resolve(items);
                 }
             });
