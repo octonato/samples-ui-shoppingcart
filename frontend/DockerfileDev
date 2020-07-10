@@ -10,7 +10,7 @@ RUN npm ci
 # Build app
 COPY . .
 
-RUN npm run devbuild
+RUN npm run build:dev
 
 # Remove dev packages
 RUN npm prune --production
@@ -32,4 +32,4 @@ COPY --from=builder /home/node/public public/
 
 # Run
 EXPOSE 8080
-ENTRYPOINT [ "npm", "run", "start-no-prestart" ]
+ENTRYPOINT [ "npm", "start" ]

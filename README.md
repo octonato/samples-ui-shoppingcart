@@ -4,38 +4,33 @@ The frontend service is a front end web application written in typescript.  It i
 
 This service makes `grpc-web` calls directly to the other services to get the data that it needs.  In order to do this we need to compile the proto definitions from the other services as well as generate the grpc-web clients.  This is all done with a shell script `protogen.sh`.  Let's first run the protogen script, then compile the service definition and finally compile our typescript.
 
-#### Building the Docker image
-
 ```
 cd frontend
+```
+
+#### Installing development dependencies (optional)
+
+Although this is not required for building and deploying the service, you might want to set up development environment
+```
 nvm install
 nvm use
 npm install
 ```
 This will install your dependencies, including cloudstate javascript client library.
-```
-./protogen.sh
-```
-protogen shell script will collect the required proto files and generate `grpc-web` clients for both typescript and javascript.
-These files will appear under the `src/_proto` directory
-```
-npm run prestart
-```
-The prestart script will run the `compile-descriptor` located in the cloudstate client library using your service definition `shop.proto` outputting `user-function.desc`.
 
-Now build the project.
+Now you can build the project
+```
+npm run build
+```
+The build script will compile the typescript and javascript into a webpack bundle.js file. This contains the code for your web front end.
 
-```
-npm run-script build
-```
-Finally the build script will compile the typescript and javascript into a webpack bundle.js file. This contains the code for your web front end.
+#### Building a container image
 
 Build a docker image with the right registry and tag
 
 NOTE: you can get a free public docker registry by signing up at [https://hub.docker.com](https://hub.docker.com/)
 
 ```
-DOCKER_PUBLISH_TO=<your repo here> npm run dockerbuild
 docker build . -t <my-registry>/frontend:latest
 ```
 

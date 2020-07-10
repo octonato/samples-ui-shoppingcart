@@ -32,4 +32,4 @@ COPY --from=builder /home/node/public public/
 
 # Run
 EXPOSE 8080
-ENTRYPOINT [ "npm", "run", "start-no-prestart" ]
+ENTRYPOINT [ "npm", "start" ]
