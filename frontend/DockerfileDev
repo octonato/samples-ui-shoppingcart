@@ -18,7 +18,9 @@ RUN npm prune --production
 # Create production image
 FROM node:12.18.0-buster-slim
 
+# Run as an unprivileged user
 WORKDIR /home/node
+USER node
 
 # Install app
 COPY --from=builder /home/node/package*.json ./
