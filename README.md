@@ -79,8 +79,8 @@ It also sets the USER_FUNCTION_HOST environment variable (the host that the side
 In order to run the frontend locally we need to configure it correctly to attach the services on their individual ports. In a full Cloudstate deployment all the services would be accessed by the web frontend over the same host and port (the same one you access the web page on), but in local testing they are all different. To handle this you can set the host and port for each service individually in a way that matches up to the config in `backend.yml`. You need to build a special version of the server that has these settings.
 
 ```
-npm run devbuild
-npm run start-no-prestart
+npm run build:local_dev
+npm start
 ```
 
 Now you should be able to use the full application and the services it depends on without needing Kubernetes or an ingress setup like Istio.
