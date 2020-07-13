@@ -4,38 +4,33 @@ The frontend service is a front end web application written in typescript.  It i
 
 This service makes `grpc-web` calls directly to the other services to get the data that it needs.  In order to do this we need to compile the proto definitions from the other services as well as generate the grpc-web clients.  This is all done with a shell script `protogen.sh`.  Let's first run the protogen script, then compile the service definition and finally compile our typescript.
 
-#### Building the Docker image
-
 ```
 cd frontend
+```
+
+#### Installing development dependencies (optional)
+
+Although this is not required for building and deploying the service, you might want to set up development environment
+```
 nvm install
 nvm use
 npm install
 ```
 This will install your dependencies, including cloudstate javascript client library.
-```
-./protogen.sh
-```
-protogen shell script will collect the required proto files and generate `grpc-web` clients for both typescript and javascript.
-These files will appear under the `src/_proto` directory
-```
-npm run prestart
-```
-The prestart script will run the `compile-descriptor` located in the cloudstate client library using your service definition `shop.proto` outputting `user-function.desc`.
 
-Now build the project.
+Now you can build the project
+```
+npm run build
+```
+The build script will compile the typescript and javascript into a webpack bundle.js file. This contains the code for your web front end.
 
-```
-npm run-script build
-```
-Finally the build script will compile the typescript and javascript into a webpack bundle.js file. This contains the code for your web front end.
+#### Building a container image
 
 Build a docker image with the right registry and tag
 
 NOTE: you can get a free public docker registry by signing up at [https://hub.docker.com](https://hub.docker.com/)
 
 ```
-DOCKER_PUBLISH_TO=<your repo here> npm run dockerbuild
 docker build . -t <my-registry>/frontend:latest
 ```
 
@@ -84,8 +79,8 @@ It also sets the USER_FUNCTION_HOST environment variable (the host that the side
 In order to run the frontend locally we need to configure it correctly to attach the services on their individual ports. In a full Cloudstate deployment all the services would be accessed by the web frontend over the same host and port (the same one you access the web page on), but in local testing they are all different. To handle this you can set the host and port for each service individually in a way that matches up to the config in `backend.yml`. You need to build a special version of the server that has these settings.
 
 ```
-npm run devbuild
-npm run start-no-prestart
+npm run build:local_dev
+npm start
 ```
 
 Now you should be able to use the full application and the services it depends on without needing Kubernetes or an ingress setup like Istio.
@@ -97,6 +92,6 @@ Create a file called `.env` in the root folder of your project with the contents
 `DOCKER_PUBLISH_TO=<your repo here>`
 
 ```
-DOCKER_PUBLISH_TO=justinhj npm run dockerdevbuild
+DOCKER_PUBLISH_TO=<your repo here>` npm run dockerdevbuild
 docker-compose -f frontend.yml up -d
 ```
