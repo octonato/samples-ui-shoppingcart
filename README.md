@@ -92,6 +92,6 @@ Create a file called `.env` in the root folder of your project with the contents
 `DOCKER_PUBLISH_TO=<your repo here>`
 
 ```
-DOCKER_PUBLISH_TO=justinhj npm run dockerdevbuild
+DOCKER_PUBLISH_TO=<your repo here>` npm run dockerdevbuild
 docker-compose -f frontend.yml up -d
 ```
