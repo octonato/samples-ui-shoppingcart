@@ -42,17 +42,14 @@ docker push <my-registry>/frontend:latest
 
 Now the image is in the registry you can deploy it either to your own Cloudstate installation or to Lightbend's Cloudstate.
 
-#### Deploying to Lightbend Cloudstate
+#### Deployment instructions
 
-See the instructions here. Note: If you have built your own Docker image be sure to replace repository and image references with yours.
+This shopping cart UI provides the frontend for multiple Shopping Cart samples. You need to deploy it with the shopping-cart service to exercise the shopping cart functionality. Please follow the instructions in the one of the following repositories to deploy:
 
-https://docs.lbcs.dev/tutorial/deploy-cart.html
+* https://github.com/cloudstateio/samples-js-shoppingcart
+* https://github.com/cloudstateio/samples-java-shoppingcart
 
-#### Deploying to your own Cloudstate deployment
-
-If you are running your own Cloudstate instance you can deploy the frontend service as follows:
-
-`kubectl apply -f deploy/frontend.yaml`
+Note: If you have built your own Docker image for the UI frontend, replace the repository and image references in the sample repository instructions.
 
 #### Local testing
 
