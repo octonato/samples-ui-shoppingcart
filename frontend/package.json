@@ -65,7 +65,7 @@
   },
   "scripts": {
     "clean": "rimraf public/build && rimraf src/_proto && rimraf user-function.desc",
-    "compile:protoc:cloudstate": "grpc_tools_node_protoc --proto_path=node_modules/cloudstate/proto --js_out=import_style=commonjs,binary:src/_proto --ts_out=src/_proto node_modules/cloudstate/proto/google/api/http.proto node_modules/cloudstate/proto/google/api/httpbody.proto node_modules/cloudstate/proto/google/api/annotations.proto node_modules/cloudstate/proto/cloudstate/entity_key.proto node_modules/cloudstate/proto/cloudstate/eventing.proto",
+    "compile:protoc:cloudstate": "grpc_tools_node_protoc --proto_path=node_modules/cloudstate/proto --js_out=import_style=commonjs,binary:src/_proto --ts_out=src/_proto node_modules/cloudstate/proto/google/api/http.proto node_modules/cloudstate/proto/google/api/httpbody.proto node_modules/cloudstate/proto/google/api/annotations.proto node_modules/cloudstate/proto/cloudstate/entity_key.proto",
     "compile:protoc:shoppingcart": "grpc_tools_node_protoc --proto_path=. --js_out=import_style=commonjs,binary:src/_proto --ts_out=service=grpc-web:src/_proto -I node_modules/cloudstate/proto shoppingcart.proto",
     "precompile:protoc": "mkdirp src/_proto",
     "compile:protoc": "npm run compile:protoc:cloudstate && npm run compile:protoc:shoppingcart",
