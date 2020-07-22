@@ -1,36 +1,44 @@
+# This Dockerfile uses multi-stage build process.
+# See https://docs.docker.com/develop/develop-images/multistage-build/
+
+# Stage 1: Downloading dependencies and building the application
 FROM node:12.18.0-buster AS builder
 
+# Set the working directory
 WORKDIR /home/node
 
 # Install app dependencies
 COPY package*.json ./
-
 RUN npm ci
 
-# Build app
+# Copy sources and build the app
 COPY . .
-
 RUN npm run build
 
 # Remove dev packages
+# (the rest will be copied to the production image at stage 2)
 RUN npm prune --production
 
-# Create production image
+# Stage 2: Building the production image
 FROM node:12.18.0-buster-slim
 
-# Run as an unprivileged user
+# Set the working directory
 WORKDIR /home/node
-USER node
 
-# Install app
-COPY --from=builder /home/node/package*.json ./
-COPY --from=builder /home/node/src src/
-COPY --from=builder /home/node/index.js index.js
-COPY --from=builder /home/node/node_modules node_modules/
-COPY --from=builder /home/node/user-function.desc .
-COPY --from=builder /home/node/shop.proto .
-COPY --from=builder /home/node/shoppingcart.proto .
-COPY --from=builder /home/node/public public/
+# Copy dependencies
+COPY --from=builder --chown=node /home/node/node_modules node_modules/
+
+# Copy the app
+COPY --from=builder --chown=node /home/node/public public/
+COPY --from=builder --chown=node \
+  /home/node/package*.json \
+  /home/node/*.js \
+  /home/node/*.proto \
+  /home/node/user-function.desc \
+  ./
+
+# Run the app as an unprivileged user for extra security.
+USER node
 
 # Run
 EXPOSE 8080
