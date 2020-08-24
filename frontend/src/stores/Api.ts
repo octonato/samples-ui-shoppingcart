@@ -14,6 +14,10 @@ export class Api{
 
     cart_client = new ShoppingCartClient(this.cart_host);
 
+    setHostname = (hostname:string) => {
+        this.cart_client = new ShoppingCartClient(hostname);
+    }
+
     setStore = (store) => {
         this.store = store;
     }

@@ -98,7 +98,7 @@ class ShoppingCart extends React.Component<Props & WithStyles<typeof styles>, St
               },
               {
                 icon: () => <DeleteOutline/>,
-                tooltip: 'Delete All Item',
+                tooltip: 'Delete All Items',
                 onClick: () => {
                   this.props.onDeleteCart(this.props.store.cartStore.cartitems);                
                 },
