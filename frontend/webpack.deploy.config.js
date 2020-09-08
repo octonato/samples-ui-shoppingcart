@@ -15,7 +15,7 @@ module.exports = env => {
 
   return {
     entry: "./src/index.tsx",
-    mode: "development",
+    mode: "production",
     devtool: 'inline-source-map',
     devServer: {
       contentBase: './public/build',
@@ -40,7 +40,7 @@ module.exports = env => {
         new TerserPlugin({
           cache: true,
           parallel: true,
-          sourceMap: true, // Must be set to true if using source-maps in production
+          sourceMap: false, // Must be set to true if using source-maps in production (10x increase in bundle size)
           terserOptions: {
             // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
             extractComments: true
