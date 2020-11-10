@@ -73,7 +73,8 @@ class UserDialog extends React.Component<Props & WithStyles<typeof styles>, Stat
         this.props.onUserAdded({name: this.state.name, avatar: this.state.avatar, online: true} as User);
     }
     handleConnect = () => {
-        this.props.store.api.setHostname("https://"+this.state.hostname);
+        const hostname = !/^https?\:\/\//.test(this.state.hostname) ? "https://"+this.state.hostname : this.state.hostname;
+        this.props.store.api.setHostname(hostname);
         window.localStorage.setItem("hostname", this.state.hostname);
         this.props.store.api.getCart({name: "test", avatar: "test", online: true} as User).then( (x) =>{
             this.setState({connected:true});
