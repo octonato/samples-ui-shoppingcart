@@ -54,10 +54,19 @@ type State = {
     connectError: string;
 }
 
+function get(name){
+    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+        return decodeURIComponent(name[1]);
+    return undefined
+}
 
 
 class UserDialog extends React.Component<Props & WithStyles<typeof styles>, State> {
-    state = {name: "", avatar: "imgs/" + Math.round(Math.random()*23) + ".png", hostname: window.localStorage.getItem("hostname") || "", connected: false, connectError: undefined }
+    state = {name: "",
+        avatar: "imgs/" + Math.round(Math.random()*23) + ".png",
+        hostname: get("hostname") ? get("hostname") : window.localStorage.getItem("hostname") || "",
+        connected: false,
+        connectError: undefined }
 
     handleClose = () => {
         this.props.onClose();
