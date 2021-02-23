@@ -296,6 +296,7 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
+                    {/*
                     <IconButton onClick={this.adjustQuantity(i, -1)} >
                       <SubIcon />
                     </IconButton>
@@ -305,6 +306,7 @@ class Base extends React.Component<Props & WithStyles<typeof styles>, State> {
                     <IconButton onClick={this.adjustQuantity(i, +1)}>
                       <AddIcon />
                     </IconButton>
+                    */}
                     <Button size="small" color="primary" onClick={this.handleAddToCart(i)} >
                       Add to Cart
                     </Button>
